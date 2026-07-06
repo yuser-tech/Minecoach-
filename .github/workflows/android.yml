@@ -23,6 +23,11 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Download Clean Gradle Wrapper JAR
+      run: |
+        mkdir -p gradle/wrapper
+        curl -Lo gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.10.2/gradle/wrapper/gradle-wrapper.jar
+
     - name: Grant Execute Permission to Gradlew
       run: chmod +x gradlew
 
