@@ -15,6 +15,18 @@ workflows:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | not_empty}}'
     - git-clone@8: {}
     - cache-pull@2: {}
+    - script@6:
+        title: Decode Debug Keystore
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            if [ -f debug.keystore.base64 ]; then
+              base64 -d debug.keystore.base64 > debug.keystore
+              echo "Decoded debug.keystore successfully!"
+            else
+              echo "No debug.keystore.base64 found."
+            fi
     - install-missing-android-tools@3:
         inputs:
         - gradlew_path: ./gradlew
