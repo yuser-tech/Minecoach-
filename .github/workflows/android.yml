@@ -23,16 +23,13 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Download Clean Gradle Wrapper JAR
-      run: |
-        mkdir -p gradle/wrapper
-        curl -Lo gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.10.2/gradle/wrapper/gradle-wrapper.jar
-
-    - name: Grant Execute Permission to Gradlew
-      run: chmod +x gradlew
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: 8.10.2
 
     - name: Build Debug APK
-      run: ./gradlew assembleDebug --no-daemon
+      run: gradle assembleDebug --no-daemon
 
     - name: Upload Debug APK Artifact
       uses: actions/upload-artifact@v4
